@@ -8,15 +8,17 @@ module.exports = (app) =>
   /*
   RETRIEVE A LIST OF BLOG LOGS
   */
-  app.get('/', (req, res, next) =>
+  app.get('/pending-blog-list', (req, res, next) =>
   {
     // req.galleryModel.find({}).sort({'created_at': -1}).exec((err, images) => res.json(images))
     req.blogModel
-      .find(
+      .find
+      (
         {
           'hasBlogEntryBeenPublished': false
         }
       )
+      .sort({updatedAt: -1})
       .then(results => res.status(200).send(results))
       .catch(next);
   });
